@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-light">
+        <a class="btn btn-default" href="{{ path('product_new') }}" role="button">Create product</a>
+
+        <form method="GET">
+            <input type="text" name="query" class="form-control">
+        </form>
+    </nav>
+
+    <h1>Product</h1>
+
+    {% if products %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.title }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.createdAt|date('Y-m-d') }}</td>
+                        <td>
+                            <a href="/product/edit/{{ product.id }}" class="btn btn-warning">Edit</a>
+                            <a href="/product/delete/{{ product.id }}" id="delete" class="btn btn-danger"
+                               onclick="if (confirm('Are you sure?')) {return true} else {return false}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No products</p>
+    {% endif %}
+{% endblock %}
